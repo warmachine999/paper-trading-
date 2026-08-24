@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>FARISTRADE X — Multi-Device Edition</title>
+
+<style>
+:root {
+    --bg: #090d16;
+    --panel: #111622;
+    --panel-hover: #171f30;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-focus: #4da3ff;
+    --text: #f4f7fb;
+    --muted: #8490a3;
+    --green: #00ea80;
+    --red: #ff4d6d;
+    --blue: #29b6ff;
+    --purple: #9b6cff;
+    --yellow: #ffd166;
+    --radius: 12px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+button, input, select, textarea {
+    font: inherit;
+    color: inherit;
+    background: transparent;
+    border: none;
+}
+
+button { cursor: pointer; }
+
+.tv-app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.tv-topbar {
+    height: 54px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+    z-index: 10;
+    flex-shrink: 0;
+}
+
+.ticker-zone {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand-title {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.asset-dropdown {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 5px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: bold;
+    outline: none;
+}
+
+.price-tracker {
+    display: flex;
+    flex-direction: column;
+    font-size: 11px;
+}
+.live-price { font-weight: 700; font-variant-numeric: tabular-nums; }
+
+.faris-badges {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    background: rgba(255,255,255,0.03);
+    padding: 4px 8px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+}
+.badge { display: flex; align-items: center; gap: 3px; font-weight: 600; }
+
+.main-viewport {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.tv-left-toolbar {
+    width: 44px;
+    background: var(--panel);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 0;
+    gap: 10px;
+    flex-shrink: 0;
+}
+@media (max-width: 599px) {
+    .tv-left-toolbar { display: none; }
+}
+
+.tool-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+    color: var(--muted);
+    transition: 0.2s;
+}
+.tool-btn:hover, .tool-btn.active {
+    background: var(--panel-hover);
+    color: var(--text);
+}
+.tool-btn.danger-purge {
+    color: var(--red);
+    background: rgba(255, 77, 109, 0.1);
+    border: 1px solid rgba(255, 77, 109, 0.2);
+}
+
+.workspace-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #0c0f1a;
+}
+
+.chart-controls {
+    height: 36px;
+    background: rgba(17, 22, 34, 0.6);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 4px;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.chart-controls::-webkit-scrollbar { display: none; }
+
+.tf-btn {
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: 600;
+    border-radius: 4px;
+    color: var(--muted);
+}
+.tf-btn.active { background: rgba(255,255,255,0.08); color: var(--text); }
+
+.indicator-tag {
+    font-size: 9px;
+    background: rgba(155, 108, 255, 0.12);
+    color: #bfa3ff;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.chart-container {
+    flex: 1;
+    position: relative;
+    min-height: 180px;
+}
+canvas { width: 100%; height: 100%; display: block; }
+
+.bottom-terminal {
+    height: 160px;
+    background: var(--panel);
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+@media (max-width: 768px) {
+    .bottom-terminal { height: 140px; }
+}
+
+.terminal-tabs {
+    height: 32px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    background: rgba(0,0,0,0.2);
+}
+.term-tab {
+    padding: 0 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+}
+.term-tab.active { color: var(--blue); border-bottom: 2px solid var(--blue); }
+
+.terminal-content { flex: 1; overflow: auto; padding: 6px; }
+.table-wrapper { width: 100%; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 11px; min-width: 500px; }
+th { color: var(--muted); padding: 6px; border-bottom: 1px solid var(--border); text-align: left; }
+td { padding: 8px 6px; border-bottom: 1px solid rgba(255,255,255,0.02); }
+
+.right-sidebar {
+    width: 280px;
+    background: var(--panel);
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+@media (max-width: 991px) {
+    .main-viewport { flex-direction: column; }
+    .right-sidebar {
+        width: 100%;
+        height: auto;
+        border-left: none;
+        border-top: 1px solid var(--border);
+        flex-direction: row;
+        overflow-y: hidden;
+    }
+    .order-panel { flex: 1; border-bottom: none; border-right: 1px solid var(--border); }
+    .private-chat-hub { flex: 1; border-top: none !important; }
+}
+@media (max-width: 599px) {
+    .right-sidebar { flex-direction: column; height: auto; overflow-y: auto; }
+    .order-panel { border-right: none; }
+    .private-chat-hub { display: none; }
+}
+
+.order-panel { padding: 12px; }
+.side-selector { display: grid; grid-template-columns: 1fr 1fr; background: rgba(0,0,0,0.2); padding: 3px; border-radius: 6px; margin-bottom: 10px; }
+.side-btn { padding: 6px; font-size: 11px; font-weight: 700; border-radius: 4px; text-align: center; color: var(--muted); }
+.side-btn.active.buy { background: var(--green); color: #000; }
+.side-btn.active.sell { background: var(--red); color: #fff; }
+
+.form-group { margin-bottom: 8px; }
+.form-label { font-size: 10px; color: var(--muted); margin-bottom: 2px; display: block; }
+.input-container { display: flex; align-items: center; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; position: relative; }
+.input-container input, .input-container select { width: 100%; padding: 6px 10px; font-size: 12px; outline: none; }
+.input-suffix { position: absolute; right: 10px; font-size: 10px; color: var(--muted); }
+
+.execution-preview { background: rgba(255,255,255,0.01); padding: 8px; border-radius: 6px; margin-bottom: 10px; font-size: 10px; }
+.preview-row { display: flex; justify-content: space-between; margin-bottom: 2px; }
+
+.execute-btn { width: 100%; padding: 10px; border-radius: 6px; font-weight: 700; font-size: 12px; text-align: center; }
+.execute-btn.buy { background: var(--green); color: #000; }
+.execute-btn.sell { background: var(--red); color: #fff; }
+
+.private-chat-hub { flex: 1; display: flex; flex-direction: column; background: rgba(0,0,0,0.15); border-top: 1px solid var(--border); min-height: 180px; }
+.chat-header { padding: 8px 12px; background: rgba(255,255,255,0.01); border-bottom: 1px solid var(--border); font-size: 11px; font-weight: bold; display: flex; justify-content: space-between; }
+.chat-log { flex: 1; padding: 10px; overflow-y: auto; font-size: 10px; display: flex; flex-direction: column; gap: 6px; max-height: 200px; }
+.msg-bubble { background: var(--panel-hover); padding: 5px 8px; border-radius: 6px; max-width: 85%; line-height: 1.3; }
+.msg-bubble.system { background: rgba(77, 163, 255, 0.08); color: var(--blue); border: 1px solid rgba(77, 163, 255, 0.15); }
+.chat-input-bar { padding: 6px; display: flex; gap: 4px; border-top: 1px solid var(--border); }
+.chat-input-bar input { flex: 1; background: var(--bg); border: 1px solid var(--border); padding: 5px 8px; border-radius: 4px; font-size: 11px; }
+.chat-send-btn { background: var(--blue); color: #000; padding: 0 10px; border-radius: 4px; font-size: 10px; font-weight: bold; }
+
+.mobile-action-bar { display: none; background: var(--panel); border-top: 1px solid var(--border); padding: 8px; text-align: center; }
+@media (max-width: 599px) { .mobile-action-bar { display: block; } }
+.mobile-reset-btn { width: 100%; background: rgba(255, 77, 109, 0.1); border: 1px solid rgba(255, 77, 109, 0.2); color: var(--red); padding: 8px; border-radius: 6px; font-size: 11px; font-weight: bold; }
+
+.green { color: var(--green) !important; }
+.red { color: var(--red) !important; }
+.empty-state { text-align: center; color: var(--muted); padding: 20px; font-size: 11px; }
+.close-action { background: rgba(255,77,109,0.1); color: var(--red); border: 1px solid rgba(255,77,109,0.2); padding: 2px 4px; border-radius: 4px; font-size: 9px; }
+</style>
+</head>
+<body>
+
+<div class="tv-app">
+    <div class="tv-topbar">
+        <div class="ticker-zone">
+            <div class="brand-title">⚡ FARISTRADE X</div>
+            <select id="assetDropdown" class="asset-dropdown" onchange="switchAsset()">
+                <option value="BTC">BTCUSD</option>
+                <option value="ETH">ETHUSD</option>
+                <option value="SOL">SOLUSD</option>
+            </select>
+            <div class="price-tracker">
+                <span id="topPrice" class="live-price">$0.00</span>
+                <span id="topChange" class="live-change">+0.00%</span>
+            </div>
+        </div>
+        
+        <div class="faris-badges">
+            <div class="badge">⚡ <span>100%</span></div>
+            <div class="badge">💰 <span id="badgeCash">$100k</span></div>
+            <div class="badge">⭐ <span id="badgeXp">0 XP</span></div>
+        </div>
+    </div>
+

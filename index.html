@@ -3,23 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>FARISTRADE X — Multi-Device Edition</title>
+<title>FARISTRADE X — Caramel & Tech Edition</title>
 
 <style>
 :root {
-    --bg: #090d16;
-    --panel: #111622;
-    --panel-hover: #171f30;
-    --border: rgba(255, 255, 255, 0.08);
-    --border-focus: #4da3ff;
-    --text: #f4f7fb;
-    --muted: #8490a3;
-    --green: #00ea80;
-    --red: #ff4d6d;
-    --blue: #29b6ff;
-    --purple: #9b6cff;
-    --yellow: #ffd166;
-    --radius: 12px;
+    --bg: #0a0a0c;
+    --panel: #141418;
+    --panel-hover: #1e1e24;
+    --border: rgba(212, 163, 89, 0.15);
+    --border-focus: #d4a359;
+    --text: #f0e6d2;
+    --muted: #8c8275;
+    
+    /* Caramel & Tech Palette */
+    --accent: #d4a359;
+    --accent-light: #f3c882;
+    --green: #4ade80;
+    --red: #f87171;
+    --tech-gray: #26262e;
 }
 
 * {
@@ -30,21 +31,20 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
     overflow-x: hidden;
 }
 
-button, input, select {
+button, select {
     font: inherit;
     color: inherit;
     background: transparent;
     border: none;
+    cursor: pointer;
 }
-
-button { cursor: pointer; }
 
 .tv-app {
     display: flex;
@@ -54,6 +54,7 @@ button { cursor: pointer; }
     overflow: hidden;
 }
 
+/* TOP NAVBAR */
 .tv-topbar {
     height: 54px;
     background: var(--panel);
@@ -69,21 +70,20 @@ button { cursor: pointer; }
 .ticker-zone {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
 .brand-title {
     font-size: 13px;
     font-weight: 800;
-    letter-spacing: 0.5px;
-    background: linear-gradient(135deg, var(--blue), var(--purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    letter-spacing: 1px;
+    color: var(--accent);
 }
 
 .asset-dropdown {
     background: var(--bg);
     border: 1px solid var(--border);
+    color: var(--accent-light);
     padding: 5px 8px;
     border-radius: 6px;
     font-size: 11px;
@@ -96,26 +96,27 @@ button { cursor: pointer; }
     flex-direction: column;
     font-size: 11px;
 }
-.live-price { font-weight: 700; font-variant-numeric: tabular-nums; }
+.live-price { font-weight: 700; color: var(--text); }
+.live-change { font-size: 10px; color: var(--green); }
 
 .faris-badges {
     display: flex;
     align-items: center;
     gap: 8px;
     font-size: 10px;
-    background: rgba(255,255,255,0.03);
-    padding: 4px 8px;
+    background: var(--tech-gray);
+    padding: 4px 10px;
     border-radius: 20px;
     border: 1px solid var(--border);
 }
-.badge { display: flex; align-items: center; gap: 3px; font-weight: 600; }
+.badge { display: flex; align-items: center; gap: 4px; font-weight: 600; color: var(--accent); }
 
+/* MAIN WORKSPACE */
 .main-viewport {
     display: flex;
     flex: 1;
     width: 100%;
     overflow: hidden;
-    position: relative;
 }
 
 .tv-left-toolbar {
@@ -127,10 +128,6 @@ button { cursor: pointer; }
     align-items: center;
     padding: 8px 0;
     gap: 10px;
-    flex-shrink: 0;
-}
-@media (max-width: 599px) {
-    .tv-left-toolbar { display: none; }
 }
 
 .tool-btn {
@@ -139,41 +136,45 @@ button { cursor: pointer; }
     border-radius: 6px;
     display: grid;
     place-items: center;
-    font-size: 14px;
+    font-size: 13px;
     color: var(--muted);
     transition: 0.2s;
 }
 .tool-btn:hover, .tool-btn.active {
-    background: var(--panel-hover);
-    color: var(--text);
+    background: var(--tech-gray);
+    color: var(--accent);
 }
 
 .workspace-center {
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    background: #0c0f1a;
+    background: #070708;
 }
 
 .chart-controls {
-    height: 36px;
-    background: rgba(17, 22, 34, 0.6);
+    height: 38px;
+    background: var(--panel);
     border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
     padding: 0 10px;
-    gap: 4px;
+    gap: 6px;
 }
 
 .tf-btn {
-    padding: 2px 6px;
+    padding: 4px 8px;
     font-size: 10px;
-    font-weight: 600;
+    font-weight: 700;
     border-radius: 4px;
     color: var(--muted);
+    border: 1px solid transparent;
 }
-.tf-btn.active { background: rgba(255,255,255,0.08); color: var(--text); }
+.tf-btn.active {
+    background: var(--bg);
+    color: var(--accent);
+    border-color: var(--border);
+}
 
 .chart-container {
     flex: 1;
@@ -184,25 +185,10 @@ button { cursor: pointer; }
 canvas { width: 100%; height: 100%; display: block; }
 
 .right-sidebar {
-    width: 280px;
+    width: 260px;
     background: var(--panel);
     border-left: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
     padding: 12px;
-    gap: 12px;
-}
-@media (max-width: 991px) {
-    .main-viewport { flex-direction: column; }
-    .right-sidebar { width: 100%; border-left: none; border-top: 1px solid var(--border); }
-}
-
-.panel-box {
-    background: rgba(0,0,0,0.2);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 10px;
-    font-size: 11px;
 }
 </style>
 </head>
@@ -219,8 +205,8 @@ canvas { width: 100%; height: 100%; display: block; }
                 <option value="SOL">SOLUSD</option>
             </select>
             <div class="price-tracker">
-                <span id="topPrice" class="live-price">$50,000.00</span>
-                <span id="topChange" class="live-change green">+1.25%</span>
+                <span id="topPrice" class="live-price">$64,280.00</span>
+                <span id="topChange" class="live-change">+2.45%</span>
             </div>
         </div>
         
@@ -233,78 +219,209 @@ canvas { width: 100%; height: 100%; display: block; }
 
     <!-- MAIN VIEWPORT -->
     <div class="main-viewport">
-        <!-- LEFT TOOLBAR -->
         <div class="tv-left-toolbar">
             <button class="tool-btn active">✏️</button>
             <button class="tool-btn">📏</button>
             <button class="tool-btn">🔍</button>
         </div>
 
-        <!-- CENTER WORKSPACE -->
         <div class="workspace-center">
             <div class="chart-controls">
-                <button class="tf-btn active">1M</button>
-                <button class="tf-btn">5M</button>
-                <button class="tf-btn">1H</button>
-                <button class="tf-btn">1D</button>
+                <button class="tf-btn active" onclick="setTimeframe('1M', this)">1M</button>
+                <button class="tf-btn" onclick="setTimeframe('5M', this)">5M</button>
+                <button class="tf-btn" onclick="setTimeframe('1H', this)">1H</button>
+                <button class="tf-btn" onclick="setTimeframe('1D', this)">1D</button>
             </div>
             <div class="chart-container">
                 <canvas id="mainCanvas"></canvas>
             </div>
         </div>
 
-        <!-- RIGHT SIDEBAR -->
         <div class="right-sidebar">
-            <div class="panel-box">
-                <strong>Dashboard Panel</strong>
-                <p style="color: var(--muted); margin-top: 6px;">Workspace metrics and configuration settings.</p>
+            <div style="font-size: 11px; color: var(--muted);">
+                <strong style="color: var(--accent);">Caramel & Tech Engine</strong>
+                <p style="margin-top: 8px; line-height: 1.4;">Active chart rendering candlesticks, live horizontal price tracker, volume sub-bars, and 1-second interval price ticks.</p>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    // Canvas Initialization & Dynamic Resize Handler
     const canvas = document.getElementById('mainCanvas');
     const ctx = canvas.getContext('2d');
+    const topPriceEl = document.getElementById('topPrice');
+
+    let currentTF = '1M';
+    let candleData = [];
+    let livePrice = 64280.00;
+    let liveTimer = null;
+
+    // Generate random candlestick dataset with volume metrics
+    function generateCandles(timeframe) {
+        candleData = [];
+        let basePrice = livePrice;
+        let count = timeframe === '1M' ? 40 : timeframe === '5M' ? 30 : timeframe === '1H' ? 24 : 15;
+        let volatility = timeframe === '1M' ? 40 : timeframe === '5M' ? 80 : timeframe === '1H' ? 200 : 500;
+
+        for (let i = 0; i < count; i++) {
+            let open = basePrice + (Math.random() - 0.48) * volatility;
+            let close = open + (Math.random() - 0.48) * volatility;
+            let high = Math.max(open, close) + Math.random() * (volatility * 0.3);
+            let low = Math.min(open, close) - Math.random() * (volatility * 0.3);
+            let volume = Math.floor(Math.random() * 80) + 20;
+            
+            candleData.push({ open, high, low, close, volume });
+            basePrice = close;
+        }
+        
+        livePrice = candleData[candleData.length - 1].close;
+        updatePriceDisplay();
+    }
+
+    function updatePriceDisplay() {
+        topPriceEl.innerText = `$${livePrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+
+    function setTimeframe(tf, btn) {
+        document.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentTF = tf;
+        generateCandles(tf);
+        drawChart();
+    }
+
+    // Real-Time Tick Engine (Runs every 1 second)
+    function startLiveTicks() {
+        if (liveTimer) clearInterval(liveTimer);
+
+        liveTimer = setInterval(() => {
+            if (candleData.length === 0) return;
+
+            let lastCandle = candleData[candleData.length - 1];
+            
+            let tickChange = (Math.random() - 0.49) * 30;
+            livePrice += tickChange;
+
+            lastCandle.close = livePrice;
+            if (livePrice > lastCandle.high) lastCandle.high = livePrice;
+            if (livePrice < lastCandle.low) lastCandle.low = livePrice;
+            lastCandle.volume += Math.floor(Math.random() * 3) + 1;
+
+            updatePriceDisplay();
+            drawChart();
+        }, 1000);
+    }
+
+    function drawChart() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Grid lines
+        ctx.strokeStyle = 'rgba(212, 163, 89, 0.05)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([]);
+        for (let x = 0; x < canvas.width; x += 50) {
+            ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+        }
+        for (let y = 0; y < canvas.height; y += 40) {
+            ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+        }
+
+        if (candleData.length === 0) return;
+
+        // Scale bounds (leaving bottom 20% for volume)
+        let prices = candleData.flatMap(c => [c.high, c.low]);
+        let minP = Math.min(...prices);
+        let maxP = Math.max(...prices);
+        let volumes = candleData.map(c => c.volume);
+        let maxVol = Math.max(...volumes);
+
+        let topPadding = 30;
+        let bottomPadding = canvas.height * 0.22;
+        let chartHeight = canvas.height - topPadding - bottomPadding;
+
+        function getY(price) {
+            return canvas.height - bottomPadding - ((price - minP) / (maxP - minP)) * chartHeight;
+        }
+
+        let candleWidth = (canvas.width - 80) / candleData.length;
+
+        // Draw Volume & Candlesticks
+        candleData.forEach((c, i) => {
+            let x = 40 + i * candleWidth + candleWidth / 2;
+            let openY = getY(c.open);
+            let closeY = getY(c.close);
+            let highY = getY(c.high);
+            let lowY = getY(c.low);
+
+            let isGreen = c.close >= c.open;
+            let color = isGreen ? '#4ade80' : '#f87171';
+
+            // Volume Bars
+            let volHeight = (c.volume / maxVol) * (canvas.height * 0.16);
+            ctx.fillStyle = isGreen ? 'rgba(74, 222, 128, 0.25)' : 'rgba(248, 113, 113, 0.25)';
+            ctx.fillRect(x - candleWidth * 0.35, canvas.height - volHeight - 10, candleWidth * 0.7, volHeight);
+
+            // Candle Wick
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(x, highY);
+            ctx.lineTo(x, lowY);
+            ctx.stroke();
+
+            // Candle Body
+            ctx.fillStyle = color;
+            let bodyY = Math.min(openY, closeY);
+            let bodyHeight = Math.max(Math.abs(closeY - openY), 2);
+            ctx.fillRect(x - candleWidth * 0.3, bodyY, candleWidth * 0.6, bodyHeight);
+        });
+
+        // Live Price Horizontal Tracking Line
+        let lastCandle = candleData[candleData.length - 1];
+        let liveY = getY(livePrice);
+        let isBullish = lastCandle.close >= lastCandle.open;
+        let lineAccentColor = isBullish ? '#4ade80' : '#f87171';
+
+        ctx.strokeStyle = lineAccentColor;
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(0, liveY);
+        ctx.lineTo(canvas.width - 70, liveY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Right Margin Price Badge
+        let badgeWidth = 65;
+        let badgeHeight = 18;
+        let badgeX = canvas.width - 68;
+        let badgeY = liveY - badgeHeight / 2;
+
+        ctx.fillStyle = lineAccentColor;
+        ctx.fillRect(badgeX, badgeY, badgeWidth, badgeHeight);
+
+        ctx.fillStyle = '#0a0a0c';
+        ctx.font = 'bold 10px monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(livePrice.toFixed(1), badgeX + badgeWidth / 2, liveY);
+    }
 
     function resizeCanvas() {
         const rect = canvas.parentElement.getBoundingClientRect();
         canvas.width = rect.width;
         canvas.height = rect.height;
-        drawSampleGrid();
-    }
-
-    function drawSampleGrid() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        // Draw background grid lines
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
-        ctx.lineWidth = 1;
-
-        const gridSize = 40;
-        for (let x = 0; x < canvas.width; x += gridSize) {
-            ctx.beginPath();
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, canvas.height);
-            ctx.stroke();
-        }
-        for (let y = 0; y < canvas.height; y += gridSize) {
-            ctx.beginPath();
-            ctx.moveTo(0, y);
-            ctx.lineTo(canvas.width, y);
-            ctx.stroke();
-        }
-
-        // Visual Placeholder Text
-        ctx.fillStyle = '#8490a3';
-        ctx.font = '12px sans-serif';
-        ctx.fillText('Canvas Workspace Ready', 20, 30);
+        drawChart();
     }
 
     window.addEventListener('resize', resizeCanvas);
+    
+    // Initialize
+    generateCandles('1M');
     resizeCanvas();
+    startLiveTicks();
 </script>
 
 </body>
-</html>
+                    </html>
+                    

@@ -37,7 +37,7 @@ body {
     overflow-x: hidden;
 }
 
-button, input, select, textarea {
+button, input, select {
     font: inherit;
     color: inherit;
     background: transparent;
@@ -147,11 +147,6 @@ button { cursor: pointer; }
     background: var(--panel-hover);
     color: var(--text);
 }
-.tool-btn.danger-purge {
-    color: var(--red);
-    background: rgba(255, 77, 109, 0.1);
-    border: 1px solid rgba(255, 77, 109, 0.2);
-}
 
 .workspace-center {
     flex: 1;
@@ -169,10 +164,7 @@ button { cursor: pointer; }
     align-items: center;
     padding: 0 10px;
     gap: 4px;
-    overflow-x: auto;
-    white-space: nowrap;
 }
-.chart-controls::-webkit-scrollbar { display: none; }
 
 .tf-btn {
     padding: 2px 6px;
@@ -183,52 +175,13 @@ button { cursor: pointer; }
 }
 .tf-btn.active { background: rgba(255,255,255,0.08); color: var(--text); }
 
-.indicator-tag {
-    font-size: 9px;
-    background: rgba(155, 108, 255, 0.12);
-    color: #bfa3ff;
-    padding: 2px 6px;
-    border-radius: 4px;
-}
-
 .chart-container {
     flex: 1;
     position: relative;
-    min-height: 180px;
+    width: 100%;
+    height: 100%;
 }
 canvas { width: 100%; height: 100%; display: block; }
-
-.bottom-terminal {
-    height: 160px;
-    background: var(--panel);
-    border-top: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 0;
-}
-@media (max-width: 768px) {
-    .bottom-terminal { height: 140px; }
-}
-
-.terminal-tabs {
-    height: 32px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    background: rgba(0,0,0,0.2);
-}
-.term-tab {
-    padding: 0 12px;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--muted);
-}
-.term-tab.active { color: var(--blue); border-bottom: 2px solid var(--blue); }
-
-.terminal-content { flex: 1; overflow: auto; padding: 6px; }
-.table-wrapper { width: 100%; overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; font-size: 11px; min-width: 500px; }
-th { color: var(--muted); padding: 6px; border-bottom: 1px solid var(--border); text-align: left; }
-td { padding: 8px 6px; border-bottom: 1px solid rgba(255,255,255,0.02); }
 
 .right-sidebar {
     width: 280px;
@@ -236,87 +189,122 @@ td { padding: 8px 6px; border-bottom: 1px solid rgba(255,255,255,0.02); }
     border-left: 1px solid var(--border);
     display: flex;
     flex-direction: column;
-    flex-shrink: 0;
+    padding: 12px;
+    gap: 12px;
 }
-
 @media (max-width: 991px) {
     .main-viewport { flex-direction: column; }
-    .right-sidebar {
-        width: 100%;
-        height: auto;
-        border-left: none;
-        border-top: 1px solid var(--border);
-        flex-direction: row;
-        overflow-y: hidden;
-    }
-    .order-panel { flex: 1; border-bottom: none; border-right: 1px solid var(--border); }
-    .private-chat-hub { flex: 1; border-top: none !important; }
-}
-@media (max-width: 599px) {
-    .right-sidebar { flex-direction: column; height: auto; overflow-y: auto; }
-    .order-panel { border-right: none; }
-    .private-chat-hub { display: none; }
+    .right-sidebar { width: 100%; border-left: none; border-top: 1px solid var(--border); }
 }
 
-.order-panel { padding: 12px; }
-.side-selector { display: grid; grid-template-columns: 1fr 1fr; background: rgba(0,0,0,0.2); padding: 3px; border-radius: 6px; margin-bottom: 10px; }
-.side-btn { padding: 6px; font-size: 11px; font-weight: 700; border-radius: 4px; text-align: center; color: var(--muted); }
-.side-btn.active.buy { background: var(--green); color: #000; }
-.side-btn.active.sell { background: var(--red); color: #fff; }
-
-.form-group { margin-bottom: 8px; }
-.form-label { font-size: 10px; color: var(--muted); margin-bottom: 2px; display: block; }
-.input-container { display: flex; align-items: center; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; position: relative; }
-.input-container input, .input-container select { width: 100%; padding: 6px 10px; font-size: 12px; outline: none; }
-.input-suffix { position: absolute; right: 10px; font-size: 10px; color: var(--muted); }
-
-.execution-preview { background: rgba(255,255,255,0.01); padding: 8px; border-radius: 6px; margin-bottom: 10px; font-size: 10px; }
-.preview-row { display: flex; justify-content: space-between; margin-bottom: 2px; }
-
-.execute-btn { width: 100%; padding: 10px; border-radius: 6px; font-weight: 700; font-size: 12px; text-align: center; }
-.execute-btn.buy { background: var(--green); color: #000; }
-.execute-btn.sell { background: var(--red); color: #fff; }
-
-.private-chat-hub { flex: 1; display: flex; flex-direction: column; background: rgba(0,0,0,0.15); border-top: 1px solid var(--border); min-height: 180px; }
-.chat-header { padding: 8px 12px; background: rgba(255,255,255,0.01); border-bottom: 1px solid var(--border); font-size: 11px; font-weight: bold; display: flex; justify-content: space-between; }
-.chat-log { flex: 1; padding: 10px; overflow-y: auto; font-size: 10px; display: flex; flex-direction: column; gap: 6px; max-height: 200px; }
-.msg-bubble { background: var(--panel-hover); padding: 5px 8px; border-radius: 6px; max-width: 85%; line-height: 1.3; }
-.msg-bubble.system { background: rgba(77, 163, 255, 0.08); color: var(--blue); border: 1px solid rgba(77, 163, 255, 0.15); }
-.chat-input-bar { padding: 6px; display: flex; gap: 4px; border-top: 1px solid var(--border); }
-.chat-input-bar input { flex: 1; background: var(--bg); border: 1px solid var(--border); padding: 5px 8px; border-radius: 4px; font-size: 11px; }
-.chat-send-btn { background: var(--blue); color: #000; padding: 0 10px; border-radius: 4px; font-size: 10px; font-weight: bold; }
-
-.mobile-action-bar { display: none; background: var(--panel); border-top: 1px solid var(--border); padding: 8px; text-align: center; }
-@media (max-width: 599px) { .mobile-action-bar { display: block; } }
-.mobile-reset-btn { width: 100%; background: rgba(255, 77, 109, 0.1); border: 1px solid rgba(255, 77, 109, 0.2); color: var(--red); padding: 8px; border-radius: 6px; font-size: 11px; font-weight: bold; }
-
-.green { color: var(--green) !important; }
-.red { color: var(--red) !important; }
-.empty-state { text-align: center; color: var(--muted); padding: 20px; font-size: 11px; }
-.close-action { background: rgba(255,77,109,0.1); color: var(--red); border: 1px solid rgba(255,77,109,0.2); padding: 2px 4px; border-radius: 4px; font-size: 9px; }
+.panel-box {
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 11px;
+}
 </style>
 </head>
 <body>
 
 <div class="tv-app">
+    <!-- TOP NAVBAR -->
     <div class="tv-topbar">
         <div class="ticker-zone">
             <div class="brand-title">⚡ FARISTRADE X</div>
-            <select id="assetDropdown" class="asset-dropdown" onchange="switchAsset()">
+            <select id="assetDropdown" class="asset-dropdown">
                 <option value="BTC">BTCUSD</option>
                 <option value="ETH">ETHUSD</option>
                 <option value="SOL">SOLUSD</option>
             </select>
             <div class="price-tracker">
-                <span id="topPrice" class="live-price">$0.00</span>
-                <span id="topChange" class="live-change">+0.00%</span>
+                <span id="topPrice" class="live-price">$50,000.00</span>
+                <span id="topChange" class="live-change green">+1.25%</span>
             </div>
         </div>
         
         <div class="faris-badges">
             <div class="badge">⚡ <span>100%</span></div>
-            <div class="badge">💰 <span id="badgeCash">$100k</span></div>
+            <div class="badge">💰 <span id="badgeCash">$100,000</span></div>
             <div class="badge">⭐ <span id="badgeXp">0 XP</span></div>
         </div>
     </div>
 
+    <!-- MAIN VIEWPORT -->
+    <div class="main-viewport">
+        <!-- LEFT TOOLBAR -->
+        <div class="tv-left-toolbar">
+            <button class="tool-btn active">✏️</button>
+            <button class="tool-btn">📏</button>
+            <button class="tool-btn">🔍</button>
+        </div>
+
+        <!-- CENTER WORKSPACE -->
+        <div class="workspace-center">
+            <div class="chart-controls">
+                <button class="tf-btn active">1M</button>
+                <button class="tf-btn">5M</button>
+                <button class="tf-btn">1H</button>
+                <button class="tf-btn">1D</button>
+            </div>
+            <div class="chart-container">
+                <canvas id="mainCanvas"></canvas>
+            </div>
+        </div>
+
+        <!-- RIGHT SIDEBAR -->
+        <div class="right-sidebar">
+            <div class="panel-box">
+                <strong>Dashboard Panel</strong>
+                <p style="color: var(--muted); margin-top: 6px;">Workspace metrics and configuration settings.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Canvas Initialization & Dynamic Resize Handler
+    const canvas = document.getElementById('mainCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+        const rect = canvas.parentElement.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+        drawSampleGrid();
+    }
+
+    function drawSampleGrid() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Draw background grid lines
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+        ctx.lineWidth = 1;
+
+        const gridSize = 40;
+        for (let x = 0; x < canvas.width; x += gridSize) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, canvas.height);
+            ctx.stroke();
+        }
+        for (let y = 0; y < canvas.height; y += gridSize) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(canvas.width, y);
+            ctx.stroke();
+        }
+
+        // Visual Placeholder Text
+        ctx.fillStyle = '#8490a3';
+        ctx.font = '12px sans-serif';
+        ctx.fillText('Canvas Workspace Ready', 20, 30);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+</script>
+
+</body>
+</html>
